@@ -1,5 +1,5 @@
 import { FormContextType, RJSFSchema, StrictRJSFSchema, TranslatableString, UnsupportedFieldProps } from '@rjsf/utils';
-import Markdown from 'markdown-to-jsx';
+import parse from 'html-react-parser';
 
 /** The `UnsupportedField` component is used to render a field in the schema is one that is not supported by
  * react-jsonschema-form.
@@ -26,9 +26,7 @@ function UnsupportedField<T = any, S extends StrictRJSFSchema = RJSFSchema, F ex
   }
   return (
     <div className='unsupported-field'>
-      <p>
-        <Markdown options={{ disableParsingRawHTML: true }}>{translateString(translateEnum, translateParams)}</Markdown>
-      </p>
+      <p>{parse(translateString(translateEnum, translateParams))}</p>
       {schema && <pre>{JSON.stringify(schema, null, 2)}</pre>}
     </div>
   );

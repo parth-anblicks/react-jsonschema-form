@@ -10,7 +10,7 @@ import {
   UIOptionsType,
   WidgetProps,
 } from '@rjsf/utils';
-import Markdown from 'markdown-to-jsx';
+import parse from 'html-react-parser';
 
 function addNameToDataURL(dataURL: string, name: string) {
   if (dataURL === null) {
@@ -115,7 +115,7 @@ function FilesInfo<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends F
         const handleRemove = () => onRemove(key);
         return (
           <li key={key}>
-            <Markdown>{translateString(TranslatableString.FilesInfo, [name, type, String(size)])}</Markdown>
+            {parse(translateString(TranslatableString.FilesInfo, [name, type, String(size)]))}
             {preview && <FileInfoPreview<T, S, F> fileInfo={fileInfo} registry={registry} />}
             <RemoveButton onClick={handleRemove} registry={registry} />
           </li>

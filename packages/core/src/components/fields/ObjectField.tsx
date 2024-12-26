@@ -17,7 +17,7 @@ import {
   ANY_OF_KEY,
   ONE_OF_KEY,
 } from '@rjsf/utils';
-import Markdown from 'markdown-to-jsx';
+import parse from 'html-react-parser';
 import get from 'lodash/get';
 import has from 'lodash/has';
 import isObject from 'lodash/isObject';
@@ -267,9 +267,7 @@ class ObjectField<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends Fo
       return (
         <div>
           <p className='config-error' style={{ color: 'red' }}>
-            <Markdown options={{ disableParsingRawHTML: true }}>
-              {translateString(TranslatableString.InvalidObjectField, [name || 'root', (err as Error).message])}
-            </Markdown>
+            {parse(translateString(TranslatableString.InvalidObjectField, [name || 'root', (err as Error).message]))}
           </p>
           <pre>{JSON.stringify(schema)}</pre>
         </div>

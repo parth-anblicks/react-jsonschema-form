@@ -22,7 +22,7 @@ import {
 } from '@rjsf/utils';
 import isObject from 'lodash/isObject';
 import omit from 'lodash/omit';
-import Markdown from 'markdown-to-jsx';
+import parse from 'html-react-parser';
 
 /** The map of component type to FieldName */
 const COMPONENT_TYPES: { [key: string]: string } = {
@@ -201,11 +201,7 @@ function SchemaFieldRender<T = any, S extends StrictRJSFSchema = RJSFSchema, F e
 
   const description = uiOptions.description || props.schema.description || schema.description || '';
 
-  const richDescription = uiOptions.enableMarkdownInDescription ? (
-    <Markdown options={{ disableParsingRawHTML: true }}>{description}</Markdown>
-  ) : (
-    description
-  );
+  const richDescription = uiOptions.enableMarkdownInDescription ? <>{parse(description)}</> : description;
   const help = uiOptions.help;
   const hidden = uiOptions.widget === 'hidden';
 
